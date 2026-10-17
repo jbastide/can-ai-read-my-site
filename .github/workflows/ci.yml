@@ -1,0 +1,59 @@
+name: Test and publish
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.9", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Unit and end-to-end tests
+        run: python -m unittest discover -s tests -v
+      - name: Install and run the command
+        run: |
+          pip install .
+          can-ai-read --version
+
+  container:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the image
+        run: docker build -t can-ai-read:test .
+      - name: Start it and check that it answers
+        run: |
+          docker run -d --name car -p 8080:8080 --read-only --cap-drop ALL can-ai-read:test
+          for i in $(seq 1 20); do curl -fsS http://127.0.0.1:8080/healthz && break; sleep 1; done
+          curl -fsS http://127.0.0.1:8080/ | grep -q "Can AI read"
+          code=$(curl -s -o /dev/null -w '%{http_code}' -X POST -H 'Content-Type: application/json' \
+            -d '{"urls":["http://169.254.169.254/latest/meta-data/"]}' http://127.0.0.1:8080/api/check)
+          test "$code" = "400"
+          docker logs car
+      - name: Publish to GitHub Container Registry
+        if: github.event_name == 'push'
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          image=ghcr.io/${{ github.repository_owner }}/can-ai-read-my-site
+          docker tag can-ai-read:test "$image:latest"
+          docker push "$image:latest"
+          if [ "${{ github.ref_type }}" = "tag" ]; then
+            docker tag can-ai-read:test "$image:${GITHUB_REF_NAME#v}"
+            docker push "$image:${GITHUB_REF_NAME#v}"
+          fi
