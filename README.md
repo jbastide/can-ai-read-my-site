@@ -2,10 +2,14 @@
 
 **A free tool that checks whether ChatGPT, Claude and Perplexity can read the facts on your web pages, and whether your server lets their crawlers in.**
 
-- **It reads your page the way an AI crawler does,** without running JavaScript. It finds your prices, dates and hidden text, and flags prices that only live in hidden code.
-- **It tests your server against Google and Bing, several times.** You learn if a firewall is turning AI crawlers away, and what kind of block it is.
-- **It writes a prompt for ChatGPT, Claude or Gemini** that lists the facts your page is missing.
+- **It reads your page the way an AI crawler does.** Most AI crawlers don't run JavaScript, so the tool reads the raw page and looks for your prices, dates and hidden text.
+  *Why it matters:* AI answers are built from facts the AI can quote. If your price only appears after a script runs, or sits in hidden code, the AI can't name it. It may name a business whose price it can see.
+- **It checks whether your server turns AI crawlers away.** It asks for your page as the crawlers from ChatGPT, Claude and Perplexity. Then it asks as Google's and Bing's crawlers, which nearly every site lets in, and compares. It repeats this a few times, so one odd answer can't fool you.
+  *Why it matters:* if your server blocks an AI's crawler, you can't appear in that AI's answers. In our study of 100 law firm websites, 13 of 78 blocked AI crawlers, and 12 of those 13 showed no sign of it in robots.txt. The owners didn't know. If Google and Bing get in but the AI crawlers don't, the block is aimed at AI, and you know who to ask about it.
+- **It writes a prompt for ChatGPT, Claude or Gemini** that lists the facts your page is missing: price, what's included, who it's for, how long it takes, what can go wrong.
+  *Why it matters:* it turns the report into a to-do list your writer can start on today.
 - **It runs on your computer or on your company's server.** IT gets a ready-made container and a setup guide.
+  *Why it matters:* there's no account to create, the pages you check stay private, and the whole team can use it.
 
 You type in a web address. About a minute later, you get a short report. Each result is marked **Fix**, **Check** or **OK**, with what to do next in plain words.
 
@@ -22,7 +26,7 @@ It is free and open source (MIT license). Made by [Copy for Originals](https://t
 | **Flags prices hidden in code** | Spots prices that are only in structured data (JSON-LD) and not in the page text. | Your prices show up where AI tools look. In one test, no AI tool found a price that only lived in that code. |
 | **Counts hidden text** | Measures text inside closed tabs, accordions and hidden boxes. | Your important answers stay in plain view instead of getting skipped. |
 | **Writes an AI review prompt** | Saves a prompt you paste into ChatGPT, Claude or Gemini. It lists the facts your page is missing: price, what's included, who it's for, how long it takes, what can go wrong. | You get a to-do list for your writer in minutes. |
-| **Compares AI crawlers with Google and Bing** | Asks for your page as a browser, nine AI crawlers, Googlebot and Bingbot, several times, a few seconds apart, in a random order. | You learn what kind of block you have, so you take the right question to the right person: your host, your IT team or your server logs. |
+| **Tests AI crawler access, with Google and Bing as a yardstick** | Asks for your page as nine AI crawlers, then as a normal browser, Googlebot and Bingbot for comparison. Repeats this several times, a few seconds apart, in a random order. | Nearly every site lets Google and Bing in. So if they get in and the AI crawlers don't, the block is aimed at AI, and you can take the right question to your host, your IT team or your server logs. |
 | **Reads robots.txt the official way** | Follows the robots.txt standard (RFC 9309) and shows the exact rule that decides each crawler. | You can keep your pages out of AI training without disappearing from AI answers. |
 | **Plain results: Fix, Check, OK** | Sorts every finding and adds a "What to do" line. | You know what to do first. No jargon. |
 | **Reports you can share** | Saves an HTML report or JSON data. | Easy to send to your boss or developer, and to compare over time. |
