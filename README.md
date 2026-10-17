@@ -2,9 +2,14 @@
 
 **A free tool that checks whether ChatGPT, Claude and Perplexity can read the facts on your web pages, and whether your server lets their crawlers in.**
 
-You type in a web address. A minute later you get a short report with three kinds of results: **Fix**, **Check** and **OK**. Each one says what to do next, in plain words.
+- **It reads your page the way an AI crawler does,** without running JavaScript. It finds your prices, dates and hidden text, and flags prices that only live in hidden code.
+- **It tests your server against Google and Bing, several times.** You learn if a firewall is turning AI crawlers away, and what kind of block it is.
+- **It writes a prompt for ChatGPT, Claude or Gemini** that lists the facts your page is missing.
+- **It runs on your computer or on your company's server.** IT gets a ready-made container and a setup guide.
 
-It runs on your own computer, or your IT team can run it on a company server for everyone. It is free and open source (MIT license). Made by [Copy for Originals](https://tools.copyfororiginals.com/can-ai-read-my-site/).
+You type in a web address. About a minute later, you get a short report. Each result is marked **Fix**, **Check** or **OK**, with what to do next in plain words.
+
+It is free and open source (MIT license). Made by [Copy for Originals](https://tools.copyfororiginals.com/can-ai-read-my-site/).
 
 ![The report for one page](docs/screenshot.jpg)
 
