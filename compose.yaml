@@ -1,9 +1,10 @@
-# Run with:  docker compose up -d --build      then open http://localhost:8080
+# Run with:  docker compose up -d      then open http://localhost:8080
+# Add --build to build from this folder instead of pulling the ready-made image.
 # See DEPLOY.md for what each setting does.
 services:
   can-ai-read:
+    image: ghcr.io/jbastide/can-ai-read-my-site:latest
     build: .
-    image: can-ai-read-my-site:local
     ports:
       - "8080:8080"
     environment:

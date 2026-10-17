@@ -12,24 +12,27 @@ This page is for IT teams. It explains what the app does, what it needs and how 
 
 ## Run it
 
-With Docker Compose, from a copy of this project:
+With the ready-made image (built and tested on GitHub for every change, for Intel and ARM servers):
+
+```bash
+docker run -d --name can-ai-read -p 8080:8080 \
+  --read-only --cap-drop ALL --security-opt no-new-privileges:true \
+  -e CAN_AI_READ_LOCATION="our company's server" \
+  ghcr.io/jbastide/can-ai-read-my-site:latest
+```
+
+With Docker Compose, using the `compose.yaml` in this project. It already runs read-only, with all Linux capabilities dropped and a memory limit:
+
+```bash
+docker compose up -d
+```
+
+If your rules say you must build images yourself, build from the source instead:
 
 ```bash
 git clone https://github.com/jbastide/can-ai-read-my-site.git
 cd can-ai-read-my-site
 docker compose up -d --build
-```
-
-The `compose.yaml` file already runs it read-only, with all Linux capabilities dropped and a memory limit.
-
-Or with plain Docker:
-
-```bash
-docker build -t can-ai-read .
-docker run -d --name can-ai-read -p 8080:8080 \
-  --read-only --cap-drop ALL --security-opt no-new-privileges:true \
-  -e CAN_AI_READ_LOCATION="our company's server" \
-  can-ai-read
 ```
 
 Without Docker (any server with Python 3.9 or newer):
@@ -94,9 +97,11 @@ The checker sees the website the way a visitor from your server's network sees i
 ## Updating
 
 ```bash
-git pull
-docker compose up -d --build
+docker pull ghcr.io/jbastide/can-ai-read-my-site:latest
+docker compose up -d
 ```
+
+If you build from source, run `git pull` and then `docker compose up -d --build`.
 
 Crawler names and user agents change now and then. They live in `can_ai_read/crawlers.py`.
 

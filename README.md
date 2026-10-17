@@ -119,13 +119,13 @@ python3 -m pip install git+https://github.com/jbastide/can-ai-read-my-site
 
 ### Option C: on a company server, for the whole team
 
-Your IT team can run the web page in a container. From a copy of this project:
+Your IT team can run the web page in a container. A ready-made image is published for Intel and ARM servers:
 
 ```bash
-git clone https://github.com/jbastide/can-ai-read-my-site.git
-cd can-ai-read-my-site
-docker compose up -d --build
+docker run -d -p 8080:8080 ghcr.io/jbastide/can-ai-read-my-site:latest
 ```
+
+Then open `http://your-server:8080/`. IT can also build the image from this project instead (see the IT guide).
 
 Everything IT needs to know is in **[DEPLOY.md](DEPLOY.md)**: settings, security, sign-in and network rules.
 
