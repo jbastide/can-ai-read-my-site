@@ -1,0 +1,23 @@
+# Run with:  docker compose up -d --build      then open http://localhost:8080
+# See DEPLOY.md for what each setting does.
+services:
+  can-ai-read:
+    build: .
+    image: can-ai-read-my-site:local
+    ports:
+      - "8080:8080"
+    environment:
+      # Only allow these domains (comma-separated). Leave empty to allow any public website.
+      CAN_AI_READ_ALLOWED_DOMAINS: ""
+      # How many checks can run at the same time.
+      CAN_AI_READ_MAX_JOBS: "2"
+      # Shown in every report, so readers know where the test requests came from.
+      CAN_AI_READ_LOCATION: "our company's server"
+      # Optional simple sign-in. Better: put the app behind your company's single sign-on.
+      # CAN_AI_READ_USERNAME: "team"
+      # CAN_AI_READ_PASSWORD: "change-me"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 256m
+    restart: unless-stopped

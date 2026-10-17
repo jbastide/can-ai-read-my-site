@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "can-ai-read-my-site"
+dynamic = ["version"]
+description = "Check if AI crawlers can get into a website and read the facts on its pages."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Copy for Originals", email = "jesse.bastide@gmail.com" }]
+requires-python = ">=3.9"
+dependencies = []
+keywords = ["ai crawlers", "gptbot", "claudebot", "perplexitybot", "robots.txt", "aeo", "geo", "seo"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Environment :: Console",
+  "Environment :: Web Environment",
+  "Topic :: Internet :: WWW/HTTP :: Site Management",
+]
+
+[project.urls]
+Homepage = "https://tools.copyfororiginals.com/can-ai-read-my-site/"
+Source = "https://github.com/jbastide/can-ai-read-my-site"
+
+[project.scripts]
+can-ai-read = "can_ai_read.cli:main"
+
+[tool.setuptools]
+packages = ["can_ai_read"]
+
+[tool.setuptools.dynamic]
+version = { attr = "can_ai_read.__version__" }
