@@ -8,29 +8,44 @@ It runs on your own computer, or your IT team can run it on a company server for
 
 ![The report for one page](docs/screenshot.jpg)
 
-## What it checks
+## What you get
+
+| Feature | What it does | What it means for you |
+| --- | --- | --- |
+| **Reads your page like an AI crawler** | Reads the raw page without running JavaScript, the way crawlers from OpenAI, Anthropic and Perplexity do. | You see what an AI actually sees. If your text only appears after a script runs, you find out before a customer's question goes unanswered. |
+| **Looks for the facts AI answers are built from** | Finds prices, dates, a "Last updated" label, question-style headings and tables in the page text. | You know which facts an AI can quote about you, and which ones to add. |
+| **Flags prices hidden in code** | Spots prices that are only in structured data (JSON-LD) and not in the page text. | Your prices show up where AI tools look. In one test, no AI tool found a price that only lived in that code. |
+| **Counts hidden text** | Measures text inside closed tabs, accordions and hidden boxes. | Your important answers stay in plain view instead of getting skipped. |
+| **Writes an AI review prompt** | Saves a prompt you paste into ChatGPT, Claude or Gemini. It lists the facts your page is missing: price, what's included, who it's for, how long it takes, what can go wrong. | You get a to-do list for your writer in minutes. |
+| **Compares AI crawlers with Google and Bing** | Asks for your page as a browser, nine AI crawlers, Googlebot and Bingbot, several times, a few seconds apart, in a random order. | You learn what kind of block you have, so you take the right question to the right person: your host, your IT team or your server logs. |
+| **Reads robots.txt the official way** | Follows the robots.txt standard (RFC 9309) and shows the exact rule that decides each crawler. | You can keep your pages out of AI training without disappearing from AI answers. |
+| **Plain results: Fix, Check, OK** | Sorts every finding and adds a "What to do" line. | You know what to do first. No jargon. |
+| **Reports you can share** | Saves an HTML report or JSON data. | Easy to send to your boss or developer, and to compare over time. |
+| **Runs on your own computer** | Command line or a web page on your machine. Python only, nothing else to install. | No account and no sign-up. Your list of pages stays with you. |
+| **Ready for your IT team** | A Docker setup with safety guards and an [IT guide](DEPLOY.md). | IT can offer it to the whole company on its own servers. |
+| **Free and open source** | MIT license. Only Python's standard library. | Nothing to buy, and the code is short enough for IT to review. |
+
+## How each check works
 
 ### 1. Can an AI find the facts on your page?
 
 Most AI crawlers don't run JavaScript. They read the raw page and pick out facts they can quote. So the tool reads your page the same way and looks for the things AI answers are built from:
 
 - **Words a crawler can see.** If most of your text is added by JavaScript, the crawler may see almost nothing.
-- **Prices.** Pages with clear prices get picked more often. The tool also flags prices that only live in hidden code (structured data). In one test, no AI tool found a price that was only there.
+- **Prices.** Pages with clear prices get picked more often. The tool also flags prices that only live in structured data.
 - **Dates.** AI tools favor text that looks recent. Is there a visible "Last updated" date?
 - **Hidden text.** Answers inside closed tabs or accordions may get thrown away.
 - **Headings.** Are any of your section headings written as the questions customers ask?
 
-It can also give you a ready-made prompt. Paste it into ChatGPT, Claude or Gemini, and it will list which facts your page is missing: price, what's included, who it's for, how long it takes, and what can go wrong.
-
 ### 2. Does your server let AI crawlers in?
 
-Many free tools can tell you this, and some are very good (see the list below). This tool uses the method from our study of 100 law firm websites:
+This uses the method from our study of 100 law firm websites:
 
 - It asks for your page as a normal browser, as nine AI crawlers, and as Google and Bing.
 - It does this **several times, a few seconds apart, in a random order**.
 - Then it compares the answers.
 
-Why bother? In [our study](https://tools.copyfororiginals.com/law-firm-websites-ai-crawlers-study/), 13 of 78 sites turned away an AI crawler's name every time. **12 of those 13 had nothing in robots.txt that showed it.** The block came from a firewall or a security plugin, and the owner usually didn't know. And 11 of the 13 let Google's and Bing's names in.
+Why do it this way? In [our study](https://tools.copyfororiginals.com/law-firm-websites-ai-crawlers-study/), 13 of 78 sites turned away an AI crawler's name every time. **12 of those 13 had nothing in robots.txt that showed it.** The block came from a firewall or a security plugin, and the owner usually didn't know. And 11 of the 13 let Google's and Bing's names in.
 
 Comparing against Google and Bing tells you what kind of block it is:
 
@@ -49,16 +64,16 @@ It keeps two kinds of AI crawlers apart:
 - **Search crawlers** like OAI-SearchBot and Claude-SearchBot. If you block these, you can't appear in that AI's answers.
 - **Training crawlers** like GPTBot and ClaudeBot. Blocking these keeps your pages out of AI training. It does **not** remove you from AI answers.
 
-## Other free checkers
+## Other free tools worth knowing
 
-If you only want to know whether AI crawlers can reach your home page, these free tools work well, and you don't need to install anything:
+Several free tools also check whether AI crawlers can reach your site. They run in your browser, with nothing to install:
 
 - [365i AI Crawler Checker](https://www.365i.co.uk/tools/ai-bot-checker/): live requests as 12 AI crawlers, plus robots.txt. No sign-up.
 - [Zeevron AI Crawler Checker](https://www.zeevron.com/tools/ai-crawler-checker): live requests as a browser and as each AI crawler. No sign-up.
-- [RankX AI Crawler Access Checker](https://rankxai.com/tools/ai-crawler-access-checker): live requests as 24 AI crawlers, more names than this tool tests. No account.
+- [RankX AI Crawler Access Checker](https://rankxai.com/tools/ai-crawler-access-checker): live requests as 24 AI crawlers. No account.
 - [TryGeoSuite ai-crawler-bots](https://github.com/TryGeoSuite/ai-crawler-bots): an open-source command line and GitHub Action.
 
-Use this tool when you also want to know whether the AI can **find the facts** on your page, when you want the Google and Bing comparison, or when you want to run it inside your company.
+Pick the one that fits what you need. This tool adds the facts check, the Google and Bing comparison, and the option to run it inside your company.
 
 ## How to run it
 
